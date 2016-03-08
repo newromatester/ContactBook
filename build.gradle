@@ -1,0 +1,51 @@
+group 'ContactBook'
+version '1.0'
+
+apply plugin: 'java'
+apply plugin: 'idea'
+
+defaultTasks 'clean', 'test'
+
+repositories {
+    mavenCentral()
+}
+
+configurations {
+    agent
+}
+
+dependencies {
+    compile 'com.google.guava:guava:+'
+    runtime 'commons-codec:commons-codec:+'
+    agent 'org.aspectj:aspectjweaver:+'
+    compile 'org.testng:testng:+'
+    compile 'com.codeborne:selenide:2.25'
+}
+
+tasks.withType(Test) {
+    reports.html.destination = file("${reporting.baseDir}/${name}")
+    useTestNG()
+}
+
+test {
+    forkEvery = 3
+    ignoreFailures = true
+    maxParallelForks = 3
+    testLogging.showStandardStreams = true
+}
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.5
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'junit:junit:+'
+    compile 'mysql:mysql-connector-java:+'
+    compile 'org.codehaus.groovy:groovy-all:+'
+    compile 'ru.qatools.commons:properties:+'
+
+}
